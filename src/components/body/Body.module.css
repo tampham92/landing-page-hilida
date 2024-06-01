@@ -1,0 +1,17 @@
+.body{
+    height: 100%;
+    width: 100%;
+    background-position:center;
+    background-repeat: no-repeat;
+    background-size: cover;
+    background-attachment: fixed;
+    background-image: url(../../assets/img/bg-body.png);
+}
+
+.item{
+    width: 1000px;
+}
+.address{
+    padding-top: 20px;
+    width: 500px;
+}
