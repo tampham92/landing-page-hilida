@@ -1,6 +1,6 @@
 import styels from './Body.module.css';
 import { itemsImg, infoAddressImg } from '../../images/Image';
-import StoreComponent from '../table-adress/StoreComponent';
+import StoreComponent from '../table-store/StoreComponent';
 function BodyComponent() {
     return (
         <div className={styels['body']}>

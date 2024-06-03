@@ -1,6 +1,5 @@
 import { useEffect, useState } from "react";
-const api_url = 'http://localhost:3001/api';
-
+const apiUrl = process.env.REACT_APP_API_ENDPOINT;
 
 function StoreComponent() {
     const [stores, setStores] = useState([]);
@@ -11,23 +10,28 @@ function StoreComponent() {
     const [districtSelect, setDistrictSelect] = useState();
 
     useEffect(() => {
-        fetch(`${api_url}/stores`)
-            .then(res => { return res.json(); })
-            .then(data => {
-                if (data.status === 200) {
-                    const citiesData = new Set();
+        async function fetchData() {
+            try {
+                const response = await fetch(`${apiUrl}/api/stores`);
 
-                    data.data.forEach(value => {
+                if (response.ok) {
+                    const storesData = await response.json();
+                    const citiesData = new Set();
+                    storesData.data.forEach(value => {
                         citiesData.add(value.city);
 
                     })
 
-                    localStorage.setItem('stores', JSON.stringify(data.data));
+                    localStorage.setItem('stores', JSON.stringify(storesData.data));
 
-                    setStores(data.data);
+                    setStores(storesData.data);
                     setCities(citiesData);
                 }
-            })
+            } catch (error) {
+                console.error(error);
+            }
+        }
+        fetchData();
     }, [])
 
     const handleSelectCity = (e) => {
@@ -53,7 +57,6 @@ function StoreComponent() {
                 listStore.push(store);
             }
         });
-        console.log(`ssssss ${listStore}`);
         setStores(listStore);
     }, [districtSelect]);
 
